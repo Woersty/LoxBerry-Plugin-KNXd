@@ -1,0 +1,326 @@
+									<div id="dialog"></div>
+									<link rel="stylesheet" href="/plugins/<!--$psubfolder-->/style.css">
+									<script src="/plugins/<!--$psubfolder-->/jquery-ui-1.9.2.custom.min.js"></script>
+									<center><!--$server-->
+										<table width="70%">
+											<tr>
+												<td width="300px"></td>
+												<td align="center"><img src="/system/images/icons/<!--$psubfolder-->/icon_64.png"><br/><b><!--$MY_NAME--></b></td>
+												<td width="100px" align="center"><div id="KNXd_control_status"><img width='40' height='40' src='../../../plugins/<!--$psubfolder-->/KNXD_STATUS_UNKNOWN.png'></div><i><small><br/><nobr><!--$TXT_KNXD_CONTROL--></nobr></small></i></td>
+												<td width="200px">
+													<a style="width:150px;" id="btnshwlog" data-icon="info"    data-role="button" data-mini="true" target="log" href="/plugins/<!--$psubfolder-->/?mode=show_logfile"><!--$TXT_BTN_SHOW_LOG--></a>
+													<a style="width:150px;" id="btndwllog" data-icon="arrow-d" data-role="button" data-mini="true" target="_self" href="/plugins/<!--$psubfolder-->/?mode=download_logfile"><!--$TXT_BTN_DOWNLOAD_LOG--></a>
+													<a style="width:150px;" id="btndwllog" data-icon="delete"  data-role="button" data-mini="true" target="_self" onclick="ConfirmDialog('<br/><br/><table><tr><td><img src=\'/plugins/<!--$psubfolder-->/ico_delete.png\'></td><td><!--$TXT_EMPTY_LOG_DIALOG_TEXT--></td></tr></table><br/>','<!--$MY_NAME--> - <!--$TXT_EMPTY_LOG_DIALOG_TITLE-->');"><!--$TXT_BTN_EMPTY_LOG--></a>
+												</td>
+											</tr>
+										</table>
+										<table cellpadding=0>
+											<tr>
+												<td width="550px">
+													<center>
+														<div id="form-error-message" class="form-error-message">&nbsp;</div>
+													</center>
+												</td>
+											</tr>
+										</table>
+									<form method="post" data-ajax="false" name="main_form" id="main_form" action="./index.cgi">
+										<input type="hidden" name="saveformdata" value="1">
+										<div class="form-group">
+											<table class="formtable" width="70%">
+												<tr>
+													<td width="10%">
+														<nobr><b><!--$TXT_KNXD_OPTS--></b></nobr>
+													</td>
+													<td width="90%">
+														<div class='editable knxd_param_ok' contenteditable='true' style='width:99%; padding:2px; border: 1px solid #7e7e7e; border-radius: 5px; font-weight: bold; background-color: #e9e9e9; ' name='KNXD_OPTS_div' id='KNXD_OPTS_div'><!--$KNXD_OPTS--></div>
+													  <input id="KNXD_OPTS" name="KNXD_OPTS" value="<!--$KNXD_OPTS-->" type="hidden">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" align="right">
+														<nobr><b><!--$TXT_KNXD_DATTIM--></b></nobr>
+													</td>
+													<td width="90%">
+														<div id='wrapdatetime' style="margin-left:-3px;">
+															 <table>
+															 	<tr>
+															 		<td>
+														 				<input id='KNXD_GAD_DAT_TIM_USE_checkbox' name='KNXD_GAD_DAT_TIM_USE_checkbox' type='checkbox'>
+															 				<div class='ui-checkbox' style="width:150px">
+															 					<label for='KNXD_GAD_DAT_TIM_USE_checkbox' class='ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off'>
+															 						<table style="width:150px">
+															 							<tr>
+															 								<td>
+																 								<nobr><b><!--$TXT_KNXD_GAD_DAT--></b></nobr>
+															 								</td>
+															 								<td style="width:120px">
+															 									<div class='editable knxd_param_ok' contenteditable='true' style='width:120px; padding:2px; border: 1px solid #7e7e7e; border-radius: 5px; font-weight: bold; background-color: #f0f0f0; ' id='KNXD_GAD_DAT_div'><!--$KNXD_GAD_DAT--></div>
+															 								</td>
+															 							</tr>
+															 							<tr>
+															 								<td>
+															 									<nobr><b><!--$TXT_KNXD_GAD_TIM--></b></nobr>
+															 								</td>
+															 								<td style="width:120px">
+															 									<div class='editable knxd_param_ok' contenteditable='true' style='width:120px; padding:2px; border: 1px solid #7e7e7e; border-radius: 5px; font-weight: bold; background-color: #f0f0f0; ' id='KNXD_GAD_TIM_div'><!--$KNXD_GAD_TIM--></div>
+															 								</td>
+															 							</tr>
+															 						</table>
+															 					</label>
+																			</div>
+														 					<input id='KNXD_GAD_DAT'   				name='KNXD_GAD_DAT' 				type='hidden' value='<!--$KNXD_GAD_DAT-->'>
+														 					<input id='KNXD_GAD_TIM'  				name='KNXD_GAD_TIM'					type='hidden' value='<!--$KNXD_GAD_TIM-->'>
+														 					<input id='KNXD_GAD_DAT_TIM_USE'  name='KNXD_GAD_DAT_TIM_USE' type='hidden' value='<!--$KNXD_GAD_DAT_TIM_USE-->'>
+															 		</td>
+															 	</tr>
+															</table>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" align="right">
+														<nobr><b><!--$TXT_KNXD_QUERY--></b></nobr>
+													</td>
+													<td width="90%">
+														<div id='wrapdatetime' style="width:100%; margin-left:-3px;">
+															 <table width="100%">
+															 	<tr>
+															 		<td>
+														 				<input id='KNXD_GAD_QUERY_USE_checkbox' name='KNXD_GAD_QUERY_USE_checkbox' type='checkbox'>
+															 				<div class='ui-checkbox' style="width:100%">
+															 					<label for='KNXD_GAD_QUERY_USE_checkbox' class='ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off'>
+															 						<table style="width:100%">
+															 							<tr>
+															 								<td>
+																 								<nobr><b><!--$TXT_KNXD_GAD_QUERY--></b></nobr>
+															 								</td>
+															 								<td style="width:100%">
+															 									<div class='editable knxd_param_ok' contenteditable='true' style='white-space: pre; height: auto; width:100%; padding:2px; border: 1px solid #7e7e7e; border-radius: 5px; font-weight: bold; background-color: #f0f0f0; ' id='KNXD_GAD_QUERY_div'><!--$KNXD_GAD_QUERY--></div>
+															 								</td>
+															 							</tr>
+															 						</table>
+															 					</label>
+																			</div>
+														 					<input id='KNXD_GAD_QUERY'   				name='KNXD_GAD_QUERY' 				type='hidden' value='<!--$KNXD_GAD_QUERY-->'>
+														 					<input id='KNXD_GAD_QUERY_USE'  		name='KNXD_GAD_QUERY_USE' 		type='hidden' value='<!--$KNXD_GAD_QUERY_USE-->'>
+															 		</td>
+															 	</tr>
+															 	<tr id="query_now_row">
+															 		<td align="right"><i><small><a target="_blank" href="http://KNXd:loxberry@<!--$HTTP_HOST-->:<!--$SERVER_PORT-->/plugins/<!--$psubfolder-->/?mode=gad_query"><nobr><!--$TXT_DO_GAD_QUERY--></nobr></a></small></i></td>
+															 	</tr>
+															</table>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</div>
+									<p>
+										<center>
+											<a id="btncancel" data-role="button" data-inline="true" data-mini="true" data-icon="delete" href="/admin/index.cgi"><!--$TXT_BTN_CANCEL--></a>
+											<button type="submit" form="main_form" id="btnsubmit" data-role="button" data-inline="true" data-mini="true" data-icon="check"><!--$TXT_BTN_SAVE--></button>
+										</center>
+									</p>
+									</form>
+									<script>
+										function ConfirmDialog(message,title)
+										{
+											  $('#dialog').html(message)
+												.prop('id','dialog')
+												.dialog(
+												{
+													modal: true, title: title, zIndex: 10000, autoOpen: true,
+													width: 'auto', resizable: true, height: '300',
+													buttons:
+													{
+														<!--$TXT_BTN_YES-->: function ()
+														{
+															$(":button:contains('<!--$TXT_BTN_YES-->')").prop("disabled", true).addClass("ui-state-disabled");
+															$('#dialog').html('<center><br/><br/><!--$TXT_EMPTY_LOG_DIALOG_PROGRESS--></center>');
+															$.get( "/plugins/<!--$psubfolder-->/?mode=empty_logfile", function( data ) 
+															{
+																$('#dialog').html('<center><br/>'+data+'</center>');
+  															setTimeout( function() { $('#dialog').dialog("close"); }, 2000);
+															}).fail(function() { $('#dialog').html('<center><br/><!--$TXT_EMPTY_LOG_DIALOG_AUTHENTICATE--></center>'); $(":button:contains('<!--$TXT_BTN_YES-->')").prop("disabled", '').removeClass("ui-state-disabled"); });
+														},
+														<!--$TXT_BTN_NO-->: function ()
+														{
+															$('#dialog').dialog("close");
+														}
+													},
+													close: function (event, ui)
+													{
+														$(this).hide();
+													}
+												});
+										};
+										$(document).on('click', 'form button[type=submit]', function(e) 
+										{
+											$("#KNXD_OPTS").val( $("#KNXD_OPTS_div").text() );
+										});
+	
+										$.validate(
+										{
+											modules : 'security',
+											errorMessagePosition : $('#form-error-message')
+										});
+	
+										function check_control_server()
+										{
+											$.get( "./index.cgi?do=test", function( data ) 
+											{
+												switch(data) 
+												{
+											    case 'KNXD_STATUS_0':
+											    case 'KNXD_STATUS_3':
+											    case 'KNXD_STATUS_768':
+											    case 'KNXD_STATUS_DOWN':
+				  										$( "#KNXd_control_status" ).html( "<img width='40' height='40' src='../../../plugins/<!--$psubfolder-->/"+data+".png'>" );
+											        break;
+											    default:
+			  										$( "#KNXd_control_status" ).html( "<img width='40' height='40' src='../../../plugins/<!--$psubfolder-->/KNXD_STATUS_UNKNOWN.png'>" );
+												}
+											});
+											setTimeout( function() { check_control_server(); }, 10000);
+										}										
+
+										$('#KNXD_OPTS_div').on('blur keyup paste input', function()
+										{
+											var rule = /^[0-9A-Za-z\-\_\s\=\.\:\s]+$/;
+											if(!rule.test($('#KNXD_OPTS_div').text()))
+											{
+												$('#form-error-message').html('<!--$TXT_ERROR_ENTER_VALID_KNXD_OPTS-->');
+												var offset = $('#KNXD_OPTS_div').offset();
+												$('#form-error-message').fadeIn(400);
+												$('#form-error-message').css({'padding': '5px', 'border': '1px solid #FF0000', 'border-radius': '5px', 'color': '#FF0000', 'background-color': '#FFFFC0', 'z-index': 1000, 'top': offset.top - 35, 'left': offset.left, 'position':'absolute'});
+												setTimeout( function() { $('#form-error-message').fadeOut(400); }, 3000);
+												$('#btnsubmit').prop('disabled','true');
+												$('#KNXD_OPTS_div').removeClass('knxd_param_ok').addClass('knxd_param_error');
+											}
+											else
+											{
+												$('#btnsubmit').prop('disabled','');
+												$('#KNXD_OPTS_div').removeClass('knxd_param_error').addClass('knxd_param_ok');
+											}
+										});
+										function init_date_time( object ) 
+										{
+											$(object+'_div').on('blur keyup paste input focusin', function()
+											{
+												valid_date_time( object );
+											});
+										}
+										function valid_date_time( object ) 
+										{
+											var rule = /^([0-9]|1[0-5])[/]{1}[0-7]{1}[/]{1}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/;
+											if( !rule.test( $(object+'_div').text() ) )
+											{
+												$('#form-error-message').html('<!--$TXT_ERROR_ENTER_VALID_KNXD_DATTIM_GAD-->');
+												var offset = $(object+'_div').offset();
+												$('#form-error-message').fadeIn(400);
+												$('#form-error-message').css({'padding': '5px', 'border': '1px solid #FF0000', 'border-radius': '5px', 'color': '#FF0000', 'background-color': '#FFFFC0', 'z-index': 1000, 'top': offset.top - 35, 'left': offset.left, 'position':'absolute'});
+												setTimeout( function() { $('#form-error-message').fadeOut(400); }, 3000);
+												$(object+'_div').removeClass('knxd_param_ok').addClass('knxd_param_error');
+												$(object).val('');
+												if ($('#KNXD_GAD_DAT_TIM_USE_checkbox').is(':checked'))
+												{
+													$('label[for=KNXD_GAD_DAT_TIM_USE_checkbox]').removeClass('ui-checkbox-on').addClass('ui-checkbox-off');
+													$('#KNXD_GAD_DAT_TIM_USE').val('off');
+												}
+												$('#KNXD_GAD_DAT_TIM_USE_checkbox').prop('checked','');
+												return false
+											}
+											else
+											{
+												$(object+'_div').removeClass('knxd_param_error').addClass('knxd_param_ok');
+												$(object).val($(object+'_div').text());
+												return true
+											}
+										}
+										$('#KNXD_GAD_DAT_TIM_USE_checkbox').click(function()
+										{
+											valid_date_time('#KNXD_GAD_DAT');
+											valid_date_time('#KNXD_GAD_TIM');
+											if (!$('#KNXD_GAD_DAT_TIM_USE_checkbox').is(':checked'))
+											{
+												$('label[for=KNXD_GAD_DAT_TIM_USE_checkbox]').removeClass('ui-checkbox-on').addClass('ui-checkbox-off');
+												$('#KNXD_GAD_DAT_TIM_USE').val('off');
+												return;
+											}
+											else
+											{
+												$('label[for=KNXD_GAD_DAT_TIM_USE_checkbox]').removeClass('ui-checkbox-off').addClass('ui-checkbox-on');
+												$('#KNXD_GAD_DAT_TIM_USE').val('on');
+												return;
+											}
+										});
+										$('#KNXD_GAD_QUERY_USE_checkbox').click(function()
+										{
+											if (!$('#KNXD_GAD_QUERY_USE_checkbox').is(':checked'))
+											{
+												$('label[for=KNXD_GAD_QUERY_USE_checkbox]').removeClass('ui-checkbox-on').addClass('ui-checkbox-off');
+												$('#KNXD_GAD_QUERY_USE').val('off');
+												$('#query_now_row').css('visibility','hidden');
+												return;
+											}
+											else
+											{
+												$('label[for=KNXD_GAD_QUERY_USE_checkbox]').removeClass('ui-checkbox-off').addClass('ui-checkbox-on');
+												$('#KNXD_GAD_QUERY_USE').val('on');
+												$('#query_now_row').css('visibility','visible');
+												return;
+											}
+										});										
+										$( document ).ready(function()
+										{
+											init_date_time('#KNXD_GAD_DAT');
+											init_date_time('#KNXD_GAD_TIM');
+											
+											$('#KNXD_GAD_QUERY_div').on('blur keyup paste input focusin', function()
+											{
+												var object = '#KNXD_GAD_QUERY';
+												var rule = /^([0-9]|1[0-5])[/]{1}[0-7]{1}[/]{1}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/;
+												var gad_array = $(object+'_div').html().replace(/<span style="font-size: 16px;">/gi,"\n").replace(/\"/gi,'').replace(/<\/span>/gi,'').replace(/<br>/gi,"").replace(/<div>/gi,"\n").replace(/<\/div>/gi,'').replace(/\n/gi,"~").replace(/~~/gi,"~").replace(/~/gi,"\n");
+												gad_array = gad_array.split("\n");
+												var goodvalues='';
+												$.each( gad_array, function( key, value ) 
+												{
+													if( !rule.test( value ) )
+													{
+														$('#form-error-message').html('<!--$TXT_ERROR_ENTER_VALID_KNXD_QUERY_GAD-->');
+														var offset = $(object+'_div').offset();
+														$('#form-error-message').fadeIn(400);
+														$('#form-error-message').css({'padding': '5px', 'border': '1px solid #FF0000', 'border-radius': '5px', 'color': '#FF0000', 'background-color': '#FFFFC0', 'z-index': 1000, 'top': offset.top - 55 + $(object+'_div').height(), 'left': offset.left, 'position':'absolute'});
+														setTimeout( function() { $('#form-error-message').fadeOut(400); }, 3000);
+														$(object+'_div').removeClass('knxd_param_ok').addClass('knxd_param_error');
+														$(object).val('');
+														if ($('#KNXD_GAD_QUERY_USE_checkbox').is(':checked'))
+														{
+															$('label[for=KNXD_GAD_QUERY_USE_checkbox]').removeClass('ui-checkbox-on').addClass('ui-checkbox-off');
+															$('#KNXD_GAD_QUERY_USE').val('off');
+															$('#query_now_row').css('visibility','hidden');
+														}
+														$('#KNXD_GAD_QUERY_USE_checkbox').prop('checked','');
+														return false
+													}
+													else
+													{
+														$(object+'_div').removeClass('knxd_param_error').addClass('knxd_param_ok');
+													  goodvalues += value + '~';
+														return true
+													}
+												});
+												$(object).val( goodvalues = goodvalues.slice(0, -1) );
+											});
+											
+											if ( $('#KNXD_GAD_DAT_TIM_USE').val() == "on" )
+											{
+												setTimeout( function() { $('label[for=KNXD_GAD_DAT_TIM_USE_checkbox]').removeClass('ui-checkbox-off').addClass('ui-checkbox-on'); }, 100);
+											}
+											if ( $('#KNXD_GAD_QUERY_USE').val() == "on" )
+											{
+												setTimeout( function() { $('label[for=KNXD_GAD_QUERY_USE_checkbox]').removeClass('ui-checkbox-off').addClass('ui-checkbox-on'); }, 100);
+											}
+											check_control_server(); 
+											$('#KNXD_GAD_QUERY_div').trigger('blur');
+										});
+									</script>

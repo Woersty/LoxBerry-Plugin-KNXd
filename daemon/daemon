@@ -1,0 +1,89 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          KNXd
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: This file is for the KNXd Plugin.
+# Description:       This file is for the KNXd Plugin.
+### END INIT INFO
+
+PATH="/sbin:/bin:/usr/sbin:/usr/bin:REPLACEBYBASEFOLDER/bin"
+PATH=$PATH.":REPLACEBYBASEFOLDER/sbin"
+
+. /lib/lsb/init-functions
+
+### END INIT INFO
+
+# Version 0.1
+# 28.10.2016 16:25:00
+
+logfile=REPLACEBYBASEFOLDER/log/plugins/REPLACEBYSUBFOLDER/knxd.log
+flagfile=REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/modify.me
+configfile=REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/knxd.cfg
+INPUTFILE="/etc/knxd.conf"
+if [ -r $flagfile ]
+then
+  touch $logfile
+  chown loxberry:loxberry $logfile
+  chmod 666 $logfile
+  echo "modify.me found. Installing KNXd Plugin."
+  echo "modify.me found. Installing."                                                                                                                 2>&1 >>$logfile
+  cd REPLACEBYBASEFOLDER/data/plugins/REPLACEBYSUBFOLDER/                                                                                             2>&1 >>$logfile
+  mkdir temp_install                                                                                                                                  2>&1 >>$logfile
+  tar -xvf REPLACEBYBASEFOLDER/data/plugins/REPLACEBYSUBFOLDER/pthsem_*.tar.gz -C temp_install                                                        2>&1 >>$logfile
+  tar -xvf REPLACEBYBASEFOLDER/data/plugins/REPLACEBYSUBFOLDER/knxd*.tar.gz    -C temp_install                                                        2>&1 >>$logfile
+  cd temp_install                                                                                                                                     2>&1 >>$logfile
+  chown loxberry:loxberry -R REPLACEBYBASEFOLDER/data/plugins/REPLACEBYSUBFOLDER/                                                                     2>&1 >>$logfile
+  cd pthsem-*                                                                                                                                         2>&1 >>$logfile
+  dpkg-buildpackage -b -uc                                                                                                                            2>&1 >>$logfile
+  cd ..                                                                                                                                               2>&1 >>$logfile
+  dpkg -i libpthsem*.deb                                                                                                                              2>&1 >>$logfile
+  cd knxd*                                                                                                                                            2>&1 >>$logfile
+  dpkg-buildpackage -b -uc                                                                                                                            2>&1 >>$logfile
+  cd ..                                                                                                                                               2>&1 >>$logfile
+  dpkg -i knxd_*.deb knxd-tools_*.deb                                                                                                                 2>&1 >>$logfile
+  cd REPLACEBYBASEFOLDER/data/plugins/REPLACEBYSUBFOLDER/                                                                                             2>&1 >>$logfile
+  rm -rf temp_install                                                                                                                                 2>&1 >>$logfile
+  KNXD_OPTS="`grep KNXD_OPTS $configfile`"                                                                                                            2>&1 >>$logfile
+  echo "Configure KNXd to use $KNXD_OPTS"                                                                                                             2>&1 >>$logfile
+  sed -i  "s%KNXD_OPTS=.*%$KNXD_OPTS%g" $INPUTFILE                                                                                                    2>&1 >>$logfile
+  ln -s REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/eibtime.pl REPLACEBYBASEFOLDER2/system/cron/cron.01min/REPLACEBYPLUGINNAME 2>&1 >>$logfile
+  echo "Try to start KNXd Control Daemon"                                                                                                             2>&1 >>$logfile
+  REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                                2>&1 >>$logfile &
+  /usr/bin/knxd -V                                                                                                                                    2>&1 >>$logfile
+  if [ $? -eq 0 ]
+  then
+    echo "Removing $flagfile"                                                                                                                         2>&1 >>$logfile
+    rm $flagfile                                                                                                                                      2>&1 >>$logfile
+    echo "Try to restart KNXd"                                                                                                                        2>&1 >>$logfile
+    service knxd stop                                                                                                                                 2>&1 >>$logfile
+    service knxd start                                                                                                                                2>&1 >>$logfile
+    if [ $? -eq 0 ]
+    then
+      echo "Installation successfully completed."                                                                                                     2>&1 >>$logfile
+      exit 0
+    fi
+  fi
+else
+  echo "Plugin modification already done."
+  echo "Plugin modification already done."                                                                                                            2>&1 >>$logfile
+  KNXD_OPTS="`grep KNXD_OPTS $configfile`"
+  echo "Configure KNXd to use $KNXD_OPTS"                                                                                                             2>&1 >>$logfile
+  sed -i  "s%KNXD_OPTS=.*%$KNXD_OPTS%g" $INPUTFILE
+  echo "Try to start KNXd Control Daemon"                                                                                                             2>&1 >>$logfile
+  REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                                2>&1 >>$logfile &
+  echo "Try to restart KNXd"                                                                                                                          2>&1 >>$logfile
+  service knxd stop                                                                                                                                   2>&1 >>$logfile
+  service knxd start                                                                                                                                  2>&1 >>$logfile
+  if [ $? -eq 0 ]
+  then
+    echo "Installation successfully completed."                                                                                                       2>&1 >>$logfile
+    exit 0
+  fi
+fi
+
+# When arriving here, something goes wrong
+echo "Installation completed with problems."                                                                                                          2>&1 >>$logfile
+exit 1
