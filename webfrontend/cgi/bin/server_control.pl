@@ -27,7 +27,6 @@ while(1)
     # get information about a newly connected client
     my $client_address = $client_socket->peerhost();
     my $client_port = $client_socket->peerport();
-    print "New connection from $client_address:$client_port\n";
  
     # read up to 1024 characters from the connected client
     my $data = "";
@@ -48,7 +47,7 @@ while(1)
     }
     elsif ( "$data" eq "StAtUs_KnXd" )
     {
-	    	system("service knxd status");
+	    	system("service knxd status 2>&1 >/dev/null");
 		    $data = "KNXD_STATUS_".$?;
     }
     else
