@@ -1,1 +1,0 @@
-git-core build-essential debhelper cdbs autoconf automake libtool libusb-1.0-0-dev libsystemd-daemon-dev 
