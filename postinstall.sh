@@ -42,7 +42,6 @@ ARGV5=$5 # Fifth argument is Base folder of LoxBerry
 # Replace real subfolder and scriptname in config file and create subfolder.dat in CGI folder
 echo "<INFO> Replace informations in daemon and config file"
 /bin/sed -i "s#REPLACEBYBASEFOLDER#$ARGV5#" $ARGV5/system/daemons/plugins/$ARGV2
-/bin/sed -i "s#REPLACEBYBASEFOLDER2#$ARGV5#" $ARGV5/system/daemons/plugins/$ARGV2
 /bin/sed -i "s#REPLACEBYBASEFOLDER#$ARGV5#" $ARGV5/config/plugins/$ARGV3/knxd.cfg
 /bin/sed -i "s#REPLACEBYSUBFOLDER#$ARGV3#" $ARGV5/system/daemons/plugins/$ARGV2
 /bin/sed -i "s#REPLACEBYSUBFOLDER#$ARGV3#" $ARGV5/config/plugins/$ARGV3/knxd.cfg

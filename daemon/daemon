@@ -16,12 +16,15 @@ PATH=$PATH.":REPLACEBYBASEFOLDER/sbin"
 
 ### END INIT INFO
 
-# Version 1.4
-# 31.10.2016 23:01:51
+# Version 1.5
+# 01.11.2016 07:10:53
 
-logfile=REPLACEBYBASEFOLDER/log/plugins/REPLACEBYSUBFOLDER/knxd.log
-flagfile=REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/modify.me
-configfile=REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/knxd.cfg
+logfile="REPLACEBYBASEFOLDER/log/plugins/REPLACEBYSUBFOLDER/knxd.log"
+flagfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/modify.me"
+configfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/knxd.cfg"
+cronjob="REPLACEBYBASEFOLDER/system/cron/cron.01min/REPLACEBYPLUGINNAME"
+timescript="REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/eibtime.pl"
+
 INPUTFILE="/etc/knxd.conf"
 if [ -r $flagfile ]
 then
@@ -37,23 +40,21 @@ then
   KNXD_OPTS="`grep KNXD_OPTS $configfile`"                                                                                                            2>&1 >>$logfile
   echo "Configure KNXd to use $KNXD_OPTS"                                                                                                             2>&1 >>$logfile
   sed -i  "s%KNXD_OPTS=.*%$KNXD_OPTS%g" $INPUTFILE                                                                                                    2>&1 >>$logfile
-  ln -s REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/eibtime.pl REPLACEBYBASEFOLDER2/system/cron/cron.01min/REPLACEBYPLUGINNAME 2>&1 >>$logfile
+  ln -s $timescript $cronjob                                                                                                                          2>&1 >>$logfile
   echo "Check, if KNXd Control Daemon is running"                                                                                                     2>&1 >>$logfile
   CS_PID=`ps -ef|grep "knxd/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                            2>&1 >>$logfile
 	if [ -z "$CS_PID" ]
 	then
-    echo "Process not found, no need to kill it"                                                                                                      2>&1 >>$logfile
+    echo "Process not found, try to start KNXd Control Daemon"                                                                                        2>&1 >>$logfile
+	  REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                              2>&1 >>$logfile &
+	  if [ $? -eq 0 ]
+	  then
+	    echo "KNXd Control Daemon restart successfully completed."                                                                                      2>&1 >>$logfile
+	  else
+	    echo "KNXd Control Daemon cannot be started. That's bad. Check the logfile!"                                                                    2>&1 >>$logfile
+	  fi
   else
-    echo "Process ID $CS_PID found, killing it"                                                                                                       2>&1 >>$logfile
-    kill -15 $CS_PID                                                                                                                                  2>&1 >>$logfile
-  fi
-  echo "Try to start KNXd Control Daemon"                                                                                                             2>&1 >>$logfile
-  REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                                2>&1 >>$logfile &
-  if [ $? -eq 0 ]
-  then
-    echo "KNXd Control Daemon restart successfully completed."                                                                                        2>&1 >>$logfile
-  else
-    echo "KNXd Control Daemon cannot be started. That's bad. Check the logfile!"                                                                      2>&1 >>$logfile
+    echo "Process ID $CS_PID found, no action"                                                                                                        2>&1 >>$logfile
   fi
   echo "Try to read KNXd Version"                                                                                                                     2>&1 >>$logfile
   /usr/bin/knxd -V                                                                                                                                    2>&1 >>$logfile
@@ -64,11 +65,24 @@ then
     rm $flagfile                                                                                                                                      2>&1 >>$logfile
     echo "Try to restart KNXd"                                                                                                                        2>&1 >>$logfile
     service knxd stop                                                                                                                                 2>&1 >>$logfile
-    service knxd start                                                                                                                                2>&1 >>$logfile
-    if [ $? -eq 0 ]
-    then
-      echo "KNXd successfully restarted."                                                                                                             2>&1 >>$logfile
-      echo "Installation complete."                                                                                                                   2>&1 >>$logfile
+	  service knxd start                                                                                                                                  2>&1 >>$logfile
+	  if [ $? -eq 0 ]
+	  then
+	    echo "Restart successfully completed."                                                                                                            2>&1 >>$logfile
+	    echo "Create Time/Date cron job."                                                                                                                 2>&1 >>$logfile
+			if [ -r "$cronjob" ]
+			then
+		    echo "Time/Date Cron job already exist."                                                                                                        2>&1 >>$logfile
+			else
+	  	  echo "Create Time/Date cron job."                                                                                                               2>&1 >>$logfile
+			  ln -s $timescript $cronjob                                                                                                                      2>&1 >>$logfile
+			  if [ $? -eq 0 ]
+			  then
+			    echo "Time/Date Cron job successfully created."                                                                                               2>&1 >>$logfile
+			  else
+			    echo "Time/Date Cron job creation failed."                                                                                                    2>&1 >>$logfile
+			  fi
+	    fi
       exit 0
     else
       echo "KNXd cannot be started. That's bad."                                                                                                      2>&1 >>$logfile
@@ -85,18 +99,16 @@ else
   CS_PID=`ps -ef|grep "knxd/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                            2>&1 >>$logfile
 	if [ -z "$CS_PID" ]
 	then
-    echo "Process not found, no need to kill it"                                                                                                      2>&1 >>$logfile
+    echo "Process not found, try to start KNXd Control Daemon"                                                                                        2>&1 >>$logfile
+	  REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                              2>&1 >>$logfile &
+	  if [ $? -eq 0 ]
+	  then
+	    echo "KNXd Control Daemon restart successfully completed."                                                                                      2>&1 >>$logfile
+	  else
+	    echo "KNXd Control Daemon cannot be started. That's bad. Check the logfile!"                                                                    2>&1 >>$logfile
+	  fi
   else
-    echo "Process ID $CS_PID found, killing it"                                                                                                       2>&1 >>$logfile
-    kill -15 $CS_PID                                                                                                                                  2>&1 >>$logfile
-  fi
-  echo "Try to start KNXd Control Daemon"                                                                                                             2>&1 >>$logfile
-  REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                                2>&1 >>$logfile &
-  if [ $? -eq 0 ]
-  then
-    echo "KNXd Control Daemon restart successfully completed."                                                                                        2>&1 >>$logfile
-  else
-    echo "KNXd Control Daemon cannot be started. That's bad. Check the logfile!"                                                                      2>&1 >>$logfile
+    echo "Process ID $CS_PID found, no action"                                                                                                        2>&1 >>$logfile
   fi
   echo "Try to restart KNXd"                                                                                                                          2>&1 >>$logfile
   service knxd stop                                                                                                                                   2>&1 >>$logfile
@@ -104,6 +116,20 @@ else
   if [ $? -eq 0 ]
   then
     echo "Restart successfully completed."                                                                                                            2>&1 >>$logfile
+    echo "Create Time/Date cron job."                                                                                                                 2>&1 >>$logfile
+		if [ -r "$cronjob" ]
+		then
+	    echo "Time/Date Cron job already exist."                                                                                                        2>&1 >>$logfile
+		else
+  	  echo "Create Time/Date cron job."                                                                                                               2>&1 >>$logfile
+		  ln -s $timescript $cronjob                                                                                                                      2>&1 >>$logfile
+		  if [ $? -eq 0 ]
+		  then
+		    echo "Time/Date Cron job successfully created."                                                                                               2>&1 >>$logfile
+		  else
+		    echo "Time/Date Cron job creation failed."                                                                                                    2>&1 >>$logfile
+		  fi
+    fi
     exit 0
   else
     echo "KNXd cannot be started. That's bad."                                                                                                        2>&1 >>$logfile
