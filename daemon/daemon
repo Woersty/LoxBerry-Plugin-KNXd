@@ -138,4 +138,4 @@ fi
 
 # When arriving here, something goes wrong
 echo "Oh oh, I had problems. Please read the Plugin-Logfile for details."                                                                             2>&1 >>$logfile
-exit 1
+exit 0
