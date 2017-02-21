@@ -19,5 +19,14 @@ cp -v -r /tmp/uploads/$ARGV1\_upgrade/log/$ARGV3/* $ARGV5/log/plugins/$ARGV3/
 echo "<INFO> Remove temporary folders"
 rm -r /tmp/uploads/$ARGV1\_upgrade
 
+/bin/sed -i "s#REPLACEBYBASEFOLDER#$ARGV5#" $ARGV5/system/daemons/plugins/$ARGV2
+/bin/sed -i "s#REPLACEBYBASEFOLDER#$ARGV5#" $ARGV5/config/plugins/$ARGV3/knxd.cfg
+/bin/sed -i "s#REPLACEBYSUBFOLDER#$ARGV3#" $ARGV5/system/daemons/plugins/$ARGV2
+/bin/sed -i "s#REPLACEBYSUBFOLDER#$ARGV3#" $ARGV5/config/plugins/$ARGV3/knxd.cfg
+/bin/sed -i "s#REPLACEBYPLUGINNAME#$ARGV2#" $ARGV5/system/daemons/plugins/$ARGV2
+
+/bin/sed -i "s#REPLACEBYBASEFOLDER#$ARGV5#" $ARGV5/webfrontend/cgi/plugins/$ARGV3/bin/server_control.pl
+/bin/sed -i "s#REPLACEBYPLUGINNAME#$ARGV2#" $ARGV5/webfrontend/cgi/plugins/$ARGV3/bin/server_control.pl
+
 # Exit with Status 0
 exit 0
