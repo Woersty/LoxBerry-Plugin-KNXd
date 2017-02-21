@@ -1,8 +1,8 @@
 <?php
 // LoxBerry KNXd-Plugin 
 // Christian Woerstenfeld - git@loxberry.woerstenfeld.de
-// Version 1.0
-// 29.10.2016 22:35:41
+// Version 1.7
+// 21.02.2017 22:16:36
 
 // Configuration parameters
 $psubdir          =array_pop(array_filter(explode('/',pathinfo($_SERVER["SCRIPT_FILENAME"],PATHINFO_DIRNAME))));
@@ -26,7 +26,13 @@ function authenticate()
 // Defaults for inexistent variables
 if (!isset($_REQUEST["mode"])) {$_REQUEST["mode"] = 'normal';}
 
-if ($_REQUEST["mode"] == "gad_query")
+if ($_REQUEST["mode"] == "read_bus")
+{
+				$result = "\n".shell_exec('echo "Reading KNX Telegrams for max. 10 seconds from now:";(sleep 10;pkill knxtool)& (CNT=1; knxtool groupsocketlisten ip: | while read LINE; do printf "%02d" $CNT;  echo " = $LINE";  CNT=$(( $CNT + 1 )); done)');
+				#if [ $CNT -gt 10 ]; then pkill knxtool; fi; 
+				error_log( date('Y-m-d H:i:s ')."[READ_BUS] $result \n", 3, $logfile);
+}
+else if ($_REQUEST["mode"] == "gad_query")
 {
 	if (file_exists($gad_query_script)) 
 	{
