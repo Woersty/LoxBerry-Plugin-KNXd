@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 #
 # gad_query.pl - read request to groupaddress on KNX/EIB
-# Version: 1.0
+# Version: v2018.3.11
 #
-# Copyright (C) 2016 for LoxBerry by Christian Wörstenfeld
+# Copyright (C) 2018 for LoxBerry by Christian Wörstenfeld
 #
 # This program is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -24,11 +24,8 @@ use warnings;
 use strict;
 
 # Used variables
-our $homefolder;
-our $pluginconfigdir;
 our $pluginconfigfile;
 our $plugin_cfg;
-our $psubfolder;
 our $query_list;
 our $query_use;
 our $eibURL;
@@ -39,19 +36,14 @@ our @gad_items;
 # Set variables
 $eibURL           = "ip:localhost";
 $groupread        = "/usr/lib/knxd/groupread";
-$homefolder       = abs_path($0);
-$homefolder       =~ s/(.*)\/(.*)\/(.*)\/(.*)\/(.*)\/(.*)\/(.*)$/$1/g;
-$psubfolder       = abs_path($0);
-$psubfolder       =~ s/(.*)\/(.*)\/(.*)\/(.*)$/$2/g;
-$pluginconfigdir  = $homefolder."/config/plugins/".$psubfolder;
-$pluginconfigfile = "$pluginconfigdir/knxd.cfg";
+$pluginconfigfile = "REPLACELBPCONFIGDIR/knxd.cfg";
 $plugin_cfg       = new Config::Simple("$pluginconfigfile");
 $query_list       = $plugin_cfg->param('KNXD_GAD_QUERY');
-$query_use        = $plugin_cfg->param('KNXD_GAD_QUERY_USE');
+$query_use        = $plugin_cfg->param('KNXD_GAD_QUERY_USE_CB');
 $error            = "";
 
 # Check if used flag is set, if not, exit
-if ( "$query_use" ne "on")
+if ( "$query_use" ne "1")
 {
   print "Feature disabled. Exiting.\n";
 	exit 0

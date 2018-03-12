@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "Uninstall KNXD" >/tmp/uninstallKNXd.log 2>&1 
+date >>/tmp/uninstallKNXd.log 2>&1 
+echo "Commenting out the KNXd section in rpimonitor if installed" >>/tmp/uninstallKNXd.log 2>&1 
+find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/^dynamic\.5679/\#KNXd\#dynamic\.5679/g' {} \; >>/tmp/uninstallKNXd.log 2>&1 
+find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/^dynamic\.3672/\#KNXd\#dynamic\.3672/g' {} \; >>/tmp/uninstallKNXd.log 2>&1 
+find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/
+^web\.status\.1\.content\.1\.line\.1\=\"\<b\>ssh\<\/b\>\ \:\ \"\+Label\(data\.ssh\,\"\=\=22\"\,\"OK\"\,\"success\"\)\+\Label\(data\.ssh\,\"\!\=22\"\,\"KO\"\,\"danger\"\)\+\"\<br\>\<br\>\<b\>KNXd/\#KNXd\#web\.status\.1\.content\.1\.line\.1\=\"\<b\>ssh\<\/b\>\ \:\ \"\+Label\(data\.ssh\,\"\=\=22\"\,\"OK\"\,\"success\"\)\+\Label\(data\.ssh\,\"\!\=22\"\,\"KO\"\,\"danger\"\)\+\"\<br\>\<br\>\<b\>KNXd/g' {} \; >>$logfile 2>&1
+echo "Stopping KNXd" >>/tmp/uninstallKNXd.log 2>&1 
+systemctl stop knxd  >>/tmp/uninstallKNXd.log 2>&1 
+echo "Stopping KNXd Control Daemon" >>/tmp/uninstallKNXd.log 2>&1 
+PID2KILL=$((`fuser -v -n tcp 5679 2>&1 |grep -o '[0-9]\+'|tail -n1`)) 
+if [ $PID2KILL -gt 1 ]
+ echo "Stopping KNXd Control Daemon with PID $PID2KILL" >>/tmp/uninstallKNXd.log 2>&1 
+ kill $PID2KILL >>/tmp/uninstallKNXd.log 2>&1 
+fi
+echo "Removing knxd knxd-dev knxd-examples knxd-tools packages " >>/tmp/uninstallKNXd.log 2>&1 
+apt-get purge -y knxd knxd-dev knxd-examples knxd-tools  >>/tmp/uninstallKNXd.log 2>&1 
+echo "Removing unused packages " >>/tmp/uninstallKNXd.log 2>&1 
+apt-get autoremove -y >>/tmp/uninstallKNXd.log 2>&1 
+echo "Uninstallation done" >>/tmp/uninstallKNXd.log 2>&1 
+date >>/tmp/uninstallKNXd.log 2>&1 
+exit 0

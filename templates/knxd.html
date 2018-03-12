@@ -1,0 +1,193 @@
+									<center>
+									<div style="width:64px; height:64px; background-image: url('<TMPL_VAR HTTP_PATH>/background64.png'); background-repeat: no-repeat;" id="KNXd_control_status"><img width='64' height='64' src='http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/KNXD_STATUS_UNKNOWN.svg'></div>
+									</center>
+									<div id="notifblock">
+										<!-- NOTIFICATIONS //-->
+										<TMPL_VAR NOTIFICATIONS>
+										<!-- NOTIFICATIONS //-->
+									</div>
+									<div id="dialog"></div>
+									<link rel="stylesheet" href="http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/style.css">
+									<center>
+									<form method="post" data-ajax="false" name="main_form" id="main_form" action="./index.cgi">
+										<input type="hidden" name="saveformdata" value="1">
+										<div class="form-group">
+											<table class="formtable" width="70%">
+												<tr>
+													<td>
+														<div style="display:table; display: inline-block;">
+															<div style="display:table-row;">
+																<div style="display:table-cell;">
+																	<b><TMPL_VAR KNXD.TXT_KNXD_OPTS></b>
+																  <input class="textfield" autocomplete="nope" data-validation-error-msg="<TMPL_VAR ERRORS.TXT_ERROR_ENTER_VALID_KNXD_OPTS>" data-validation-rule="^[0-9A-Za-z\-\_\s\=\.\:\s]+$"  id="KNXD_OPTS" name="KNXD_OPTS" value="<TMPL_VAR KNXD_OPTS>" type="text">
+																</div>
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<input type="checkbox" id="KNXD_GAD_DAT_TIM_USE_CB_checkbox" name="KNXD_GAD_DAT_TIM_USE_CB_checkbox"><label id="KNXD_GAD_DAT_TIM_USE_LABEL" for="KNXD_GAD_DAT_TIM_USE_CB_checkbox"><TMPL_VAR KNXD.TXT_KNXD_DATTIM></label>
+													 	<input id="KNXD_GAD_DAT_TIM_USE_CB" name="KNXD_GAD_DAT_TIM_USE_CB" type="hidden" value="<TMPL_VAR KNXD_GAD_DAT_TIM_USE_CB>">
+														<div id="KNXD_GAD_DAT_TIM_USE_div" style="text-align:center; background-color: rgba(255,255,192,.3); border: 1px solid black; border-radius: 0 0 5px 5px; margin-top:-12px; ">
+															<div style="display:table; padding:10px;">
+																<div style="display:table-row;">
+																	<div style="display:table-cell; text-align:right;">
+																		<b><TMPL_VAR KNXD.TXT_KNXD_GAD_DAT></b>
+																	</div>
+																	<div style="display:table-cell;">
+																		<input autocomplete="nope" data-validation-error-msg="<TMPL_VAR ERRORS.TXT_ERROR_ENTER_VALID_KNXD_DATTIM_GAD>" data-validation-rule="^([0-9]|1[0-5])[/]{1}[0-7]{1}[/]{1}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$"  id='KNXD_GAD_DAT'   				name='KNXD_GAD_DAT' 				type='text' value='<TMPL_VAR KNXD_GAD_DAT>'>
+																	</div>
+																</div>
+																<div style="display:table-row;">
+																	<div style="display:table-cell; text-align:right;">
+																		<b><TMPL_VAR KNXD.TXT_KNXD_GAD_TIM></b>
+																	</div>
+																	<div style="display:table-cell;">
+																		<input autocomplete="nope" data-validation-error-msg="<TMPL_VAR ERRORS.TXT_ERROR_ENTER_VALID_KNXD_DATTIM_GAD>" data-validation-rule="^([0-9]|1[0-5])[/]{1}[0-7]{1}[/]{1}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$"  id='KNXD_GAD_TIM'   				name='KNXD_GAD_TIM' 				type='text' value='<TMPL_VAR KNXD_GAD_TIM>'>										</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<input type="checkbox" id="KNXD_GAD_QUERY_USE_CB_checkbox" name="KNXD_GAD_QUERY_USE_CB_checkbox"><label id="KNXD_GAD_QUERY_USE_LABEL" for="KNXD_GAD_QUERY_USE_CB_checkbox"><TMPL_VAR KNXD.TXT_KNXD_GAD_QUERY></label>
+													 	<input id="KNXD_GAD_QUERY_USE_CB" name="KNXD_GAD_QUERY_USE_CB" type="hidden" value="<TMPL_VAR KNXD_GAD_QUERY_USE_CB>">
+														<div id="KNXD_GAD_QUERY_USE_div" style="text-align:center; background-color: rgba(255,255,192,.3); border: 1px solid black; border-radius: 0 0 5px 5px; margin-top:-12px; ">
+															<div style="display:table; text-align:left; padding:10px;">
+																<div style="display:table-row;">
+																	<div style="display:table-cell; text-align:right;">
+																		<b><TMPL_VAR KNXD.TXT_KNXD_GAD_LIST></b>
+																	</div>
+																	<div style="display:table-cell;">
+																		<input autocomplete="nope" data-validation-error-msg="<TMPL_VAR ERRORS.TXT_ERROR_ENTER_VALID_KNXD_QUERY_GAD>" data-validation-rule="^(([0-9]|1[0-5])[\/]{1}[0-7]{1}[\/]{1}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])([\~]?))*$"  id='KNXD_GAD_QUERY'   				name='KNXD_GAD_QUERY' 				type='text' value='<TMPL_VAR KNXD_GAD_QUERY>'>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div style="display:table; width:100%; text-align:right;">
+															<div style="display:table-row;" id="query_now_row">
+																<div style="display:table-cell;">
+																	<i><small><a target="_blank" href="http://KNXd:loxberry@<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/?mode=gad_query"><nobr><TMPL_VAR KNXD.TXT_DO_GAD_QUERY></nobr></a></small></i>
+																</div>
+															</div>
+															<div style="display:table-row;" id="read_bus_row">
+																<div style="display:table-cell;">
+																	<i><small><a target="_blank" href="http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/?mode=read_bus"><nobr><TMPL_VAR KNXD.TXT_READ_BUS></nobr></a></small></i>
+																</div>
+															</div>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</div>
+									<p>
+											<a id="btncancel" data-role="button" data-inline="true" data-mini="true" data-icon="delete" href="/admin/index.cgi"><TMPL_VAR KNXD.TXT_BTN_CANCEL></a>
+											<button type="submit" form="main_form" id="btnsubmit" data-role="button" data-inline="true" data-mini="true" data-icon="check"><TMPL_VAR KNXD.TXT_BTN_SAVE></button>
+									</p>
+									</form>
+									</center>
+<script>
+	function check_control_server()
+	{
+		$.get( "./index.cgi?test=1", function( data ) 
+		{
+			data="KNXD_STATUS_3";
+			switch(data) 
+			{
+				
+		    case 'KNXD_STATUS_0':
+					$( "#KNXd_control_status" ).html( "<img width='64' height='64' src='http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/"+data+".svg'>" );
+		        break;
+		    case 'KNXD_STATUS_3':
+		    case 'KNXD_STATUS_768':
+					$( "#KNXd_control_status" ).html( "<img width='64' height='64' src='http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/"+data+".svg'>" );
+		        break;
+		    case 'KNXD_STATUS_DOWN':
+		    case 'KNXD_STATUS_1024':
+					$( "#KNXd_control_status" ).html( "<img width='64' height='64' src='http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/"+data+".svg'>" );
+		        break;
+		    default:
+				$( "#KNXd_control_status" ).html( "<img width='64' height='64' src='http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/KNXD_STATUS_UNKNOWN.svg'>" );
+			}
+		});
+		setTimeout( function() { check_control_server(); }, 10000);
+	}										
+	$( document ).ready(function()
+	{
+		validate_enable('#KNXD_OPTS');
+		validate_enable('#KNXD_GAD_DAT');
+		validate_enable('#KNXD_GAD_TIM');
+		validate_enable('#KNXD_GAD_QUERY');
+		// Set checkbox trigger
+		$('#KNXD_GAD_DAT_TIM_USE_CB_checkbox').on('change', function(event)
+		{
+ 			if ( $(this).is(':checked') )
+			 {
+				$("#KNXD_GAD_DAT_TIM_USE_div").fadeIn();
+				validate_chk_object(['#KNXD_GAD_DAT','#KNXD_GAD_TIM']);
+				$("#KNXD_GAD_DAT_TIM_USE_CB").val(1);
+			 }
+			 else
+			 {
+				$("#KNXD_GAD_DAT_TIM_USE_div").fadeOut();
+				validate_clean_objects(['#KNXD_GAD_DAT','#KNXD_GAD_TIM']);
+				$("#KNXD_GAD_DAT_TIM_USE_CB").val(0);
+			 }
+		});
+		<TMPL_VAR KNXD_GAD_DAT_TIM_USE_CB_script>				
+		$('#KNXD_GAD_QUERY_USE_CB_checkbox').on('change', function(event)
+		{
+ 			if ( $(this).is(':checked') )
+			 {
+				$("#KNXD_GAD_QUERY_USE_div").fadeIn();
+				validate_chk_object(['#KNXD_GAD_QUERY']);
+				$("#KNXD_GAD_QUERY_USE_CB").val(1);
+			 }
+			 else
+			 {
+				$("#KNXD_GAD_QUERY_USE_div").fadeOut();
+				validate_clean_objects(['#KNXD_GAD_QUERY']);
+				$("#KNXD_GAD_QUERY_USE_CB").val(0);
+			 }
+		});
+		<TMPL_VAR KNXD_GAD_QUERY_USE_CB_script>				
+		check_control_server(); 
+	});
+</script>
+<center>
+	<div style="display:table;">
+		<div style="display:table-row;">
+			<div style="display:table-cell; ">
+				<div style="display:table; padding:10px; border: 1px solid black; border-radius: 5px; background-color: rgba(19,172,132,.2);">
+				<TMPL_VAR KNXD.LOG_AREA> (<TMPL_VAR .LOGLEVEL><TMPL_VAR LOGLEVEL>)<br>
+			 		<div style="display:table-row;">
+						<div style="display:table-cell; border-radius: 5px;" id="delete_log_div">
+				 			<button id="delete_log_btn" onclick="$('#delete_log_div').css('background-color','yellow'); $('#delete_log_btn').html('<TMPL_VAR KNXD.LOG_BUTTON_DELETE_WORKING>'); $.ajax({url: '', type: 'GET', data: { 'delete_log':1},
+					            success: function (data) {
+					                $('#delete_log_div').css('background-color','green');
+					                $('#delete_log_btn').html('<TMPL_VAR KNXD.LOG_BUTTON_DELETE_OK>');
+					                setTimeout( function() { $('#delete_log_div').css('background-color',''); $('#delete_log_btn').html('<TMPL_VAR KNXD.LOG_BUTTON_DELETE>'); }, 2000);
+					            },
+					            error: function (textStatus, errorThrown) {
+					                $('#delete_log_div').css('background-color','red');
+					                $('#delete_log_btn').html('<TMPL_VAR KNXD.LOG_BUTTON_DELETE_FAIL>');
+					                setTimeout( function() { $('#delete_log_div').css('background-color',''); $('#delete_log_btn').html('<TMPL_VAR KNXD.LOG_BUTTON_DELETE>');}, 2000);
+					
+					            }	}); return false;" data-role="button" data-inline="true" data-mini="true"><TMPL_VAR KNXD.LOG_BUTTON_DELETE></button>
+				 			<button onclick="window.open('/admin/system/tools/logfile.cgi?logfile=<TMPL_VAR LOGFILE>&amp;header=html&amp;format=template', 'log'); return false;" id="logview" data-role="button" data-inline="true" data-mini="true"><TMPL_VAR KNXD.LOG_BUTTON_VIEW></button>
+						</div>
+			 		</div>
+				</div>
+		 	</div>
+	 	</div>
+</div>
+</center>
+<SMALL><TMPL_VAR VERSION></SMALL>
+	

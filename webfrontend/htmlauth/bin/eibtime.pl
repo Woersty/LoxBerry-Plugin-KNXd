@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 #
 # eibtime.pl - Send time and date to KNX/EIB
-# Version: 2.0
+# Version: v2018.3.11
 #
 # Copyright (C) 2008 Thomas Hoerndlein
-# Adapted for LoxBerry by Christian Wörstenfeld
+# Adapted for LoxBerry 1.x by Christian Wörstenfeld in 2018
 #
 # This program is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -24,11 +24,8 @@ use warnings;
 use strict;
 
 # Used variables
-our $homefolder;
-our $pluginconfigdir;
 our $pluginconfigfile;
 our $plugin_cfg;
-our $psubfolder;
 our $grptime;
 our $grpdate;
 our $datetimeuse;
@@ -51,20 +48,15 @@ our $error;
 # Set variables
 $eibURL           = "ip:localhost";
 $groupwrite       = "/usr/lib/knxd/groupwrite";
-$homefolder       = abs_path($0);
-$homefolder       =~ s/(.*)\/(.*)\/(.*)\/(.*)\/(.*)\/(.*)\/(.*)$/$1/g;
-$psubfolder       = abs_path($0);
-$psubfolder       =~ s/(.*)\/(.*)\/(.*)\/(.*)$/$2/g;
-$pluginconfigdir  = $homefolder."/config/plugins/".$psubfolder;
-$pluginconfigfile = "$pluginconfigdir/knxd.cfg";
+$pluginconfigfile = "REPLACELBPCONFIGDIR/knxd.cfg";
 $plugin_cfg       = new Config::Simple("$pluginconfigfile");
 $grptime          = $plugin_cfg->param('KNXD_GAD_TIM');
 $grpdate          = $plugin_cfg->param('KNXD_GAD_DAT');
-$datetimeuse      = $plugin_cfg->param('KNXD_GAD_DAT_TIM_USE');
+$datetimeuse      = $plugin_cfg->param('KNXD_GAD_DAT_TIM_USE_CB');
 $error            = "";
 
 # Check if used flag is set, if not, exit
-if ( "$datetimeuse" ne "on")
+if ( "$datetimeuse" ne "1")
 {
   print "Feature disabled. Exiting.\n";
 	exit 0

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          KNXd
 # Required-Start:    $remote_fs $syslog $network
@@ -9,23 +9,29 @@
 # Description:       This file is for the KNXd Plugin.
 ### END INIT INFO
 
-PATH="/sbin:/bin:/usr/sbin:/usr/bin:REPLACEBYBASEFOLDER/bin"
-PATH=$PATH.":REPLACEBYBASEFOLDER/sbin"
+PATH="/sbin:/bin:/usr/sbin:/usr/bin:REPLACELBHOMEDIR/bin"
+PATH=$PATH.":REPLACELBHOMEDIR/sbin"
 
 . /lib/lsb/init-functions
 
 ### END INIT INFO
 
-# Version 1.5
-# 01.11.2016 07:10:53
+# Version v2018.3.11
 
-logfile="REPLACEBYBASEFOLDER/log/plugins/REPLACEBYSUBFOLDER/knxd.log"
-flagfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/modify.me"
-configfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/knxd.cfg"
-cronjob="REPLACEBYBASEFOLDER/system/cron/cron.01min/REPLACEBYPLUGINNAME"
-timescript="REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/eibtime.pl"
+logfile="REPLACELBPLOGDIR/knxd.log"
+flagfile="REPLACELBPCONFIGDIR/modify.me"
+configfile="REPLACELBPCONFIGDIR/knxd.cfg"
+cronjob="REPLACELBHOMEDIR/system/cron/cron.01min/KNXd"
+timescript="REPLACELBPHTMLAUTHDIR/bin/eibtime.pl"
 
 INPUTFILE="/etc/knxd.conf"
+echo "Uncommenting the KNXd section in rpimonitor if installed" >>$logfile 2>&1
+find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#dynamic\.5679/dynamic\.5679/g' {} \; >>$logfile 2>&1
+find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#dynamic\.3672/dynamic\.3672/g' {} \; >>$logfile 2>&1
+find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#web\.status/web\.status/g' {} \;     >>$logfile 2>&1
+echo "Restart rpimonitor if installed"	 >>$logfile 2>&1
+echo `sleep 30;systemctl restart rpimonitor 2>/dev/null` &
+
 if [ -r $flagfile ]
 then
   touch $logfile
@@ -33,7 +39,7 @@ then
   chmod 666 $logfile
   echo "modify.me found. Installing KNXd Plugin."
   echo "modify.me found. Installing."                                                                                                                 2>&1 >>$logfile
-  cd REPLACEBYBASEFOLDER/data/plugins/REPLACEBYSUBFOLDER/                                                                                             2>&1 >>$logfile
+  cd REPLACELBPDATADIR/                                                                                                                               2>&1 >>$logfile
   dpkg -i libpthsem*.deb                                                                                                                              2>&1 >>$logfile
   dpkg -i knxd_*.deb knxd-tools_*.deb                                                                                                                 2>&1 >>$logfile
   cd                                                                                                                                                  2>&1 >>$logfile
@@ -46,7 +52,7 @@ then
 	if [ -z "$CS_PID" ]
 	then
     echo "Process not found, try to start KNXd Control Daemon"                                                                                        2>&1 >>$logfile
-	  REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                              2>&1 >>$logfile &
+	  REPLACELBPHTMLAUTHDIR/bin/server_control.pl                                                                                                     2>&1 >>$logfile &
 	  if [ $? -eq 0 ]
 	  then
 	    echo "KNXd Control Daemon restart successfully completed."                                                                                      2>&1 >>$logfile
@@ -100,7 +106,7 @@ else
 	if [ -z "$CS_PID" ]
 	then
     echo "Process not found, try to start KNXd Control Daemon"                                                                                        2>&1 >>$logfile
-	  REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                              2>&1 >>$logfile &
+	  REPLACELBPHTMLAUTHDIR/bin/server_control.pl                                                              2>&1 >>$logfile &
 	  if [ $? -eq 0 ]
 	  then
 	    echo "KNXd Control Daemon restart successfully completed."                                                                                      2>&1 >>$logfile

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 
-# Version 1.0
-# LoxBerry KNXd Plugin Control Server
+# Version v2018.3.11
+# LoxBerry 	KNXd Plugin Control Server
 #
 use IO::Socket::INET;
  
@@ -35,7 +35,7 @@ while(1)
 
     if ( "$data" eq "ReStArT_KnXd" )
     {
-    	system("REPLACEBYBASEFOLDER/system/daemons/plugins/REPLACEBYPLUGINNAME");
+    	system("REPLACELBHOMEDIR/system/daemons/plugins/KNXd");
 			  if ($? ne 0) 
 			  {
 			    $data = "TXT_ERROR2_CONFIG_SAVED";
