@@ -112,6 +112,13 @@ LOGDEB "Init CGI and import names in namespace R::";
 my $cgi 	= CGI->new;
 $cgi->import_names('R');
 
+$R::test if 0; # Prevent errors
+if ( $R::test ) 
+{
+	LOGDEB "KNXd status request";
+	&test;
+}
+
 if ( $R::delete_log )
 {
 	LOGDEB "Oh, it's a log delete call. ".$R::delete_log;
@@ -231,18 +238,11 @@ foreach my $config_value (@pluginconfig_strings)
 	}                                  	                             
 	else
 	{
-		LOGWARN "Config variable: " . $config_value . " missing or empty.";     
+		LOGINF "Config variable: " . $config_value . " missing or empty.";     
   		$maintemplate->param($config_value	, "");
 	}	                                                                
 }    
 $maintemplate->param( "LBPPLUGINDIR" , $lbpplugindir);
-
-$R::test if 0; # Prevent errors
-if ( $R::test ) 
-{
-	LOGDEB "Is it a test call?";
-	&test;
-}
 
 $R::saveformdata if 0; # Prevent errors
 LOGDEB "Is it a save call?";
@@ -321,13 +321,6 @@ else
 	LOGDEB "No, not a save call";
 }
 LOGDEB "Call default page";
-
-
-if ( $R::test )
-{
-  print "Content-Type: text/html\n\n"; 
-  &test;
-}
 
 &defaultpage;
 
@@ -421,6 +414,7 @@ sub error
 
 	sub test
 	{
+			LOGDEB "Open socket to KNXd Control Server...";
 			print "Content-Type: text/html\n\n";
 			use IO::Socket::INET;
 			# auto-flush on socket
@@ -433,6 +427,7 @@ sub error
 			);
 			if ( $socket )
 			{
+				LOGINF "Socket to KNXd Control Server opened...";
 				# data to send to a server
 				my $req = 'StAtUs_KnXd';
 				my $size = $socket->send($req);
@@ -447,9 +442,12 @@ sub error
 				
 				$socket->close();
 				print $response ;
+				LOGOK "Response: $response";
+				LOGINF "Socket to KNXd Control Server closed.";
 			}
 			else
 			{
+				LOGERR "Open socket to KNXd Control Server failed. Set status to down.";
 				print "KNXD_STATUS_DOWN" ;
 			}
 		exit;
