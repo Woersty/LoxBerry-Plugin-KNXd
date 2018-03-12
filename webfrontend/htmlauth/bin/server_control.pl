@@ -50,6 +50,12 @@ while(1)
 	    	system("service knxd status 2>&1 >/dev/null");
 		    $data = "KNXD_STATUS_".$?;
     }
+    elsif ( "$data" eq "StOp_KnXd" )
+    {
+	    	system("service knxd stop 2>&1 >/dev/null");
+	    	system("service knxd status 2>&1 >/dev/null");
+		    $data = "KNXD_STATUS_".$?;
+    }
     else
     {
     	    $data = "TXT_ERROR3_CONFIG_SAVED";

@@ -119,6 +119,13 @@ if ( $R::test )
 	&test;
 }
 
+$R::stop if 0; # Prevent errors
+if ( $R::stop ) 
+{
+	LOGDEB "KNXd stop request";
+	&stop;
+}
+
 if ( $R::delete_log )
 {
 	LOGDEB "Oh, it's a log delete call. ".$R::delete_log;
@@ -430,6 +437,51 @@ sub error
 				LOGINF "Socket to KNXd Control Server opened...";
 				# data to send to a server
 				my $req = 'StAtUs_KnXd';
+				my $size = $socket->send($req);
+				
+				# notify server that request has been sent
+				shutdown($socket, 1);
+				
+				# receive a response of up to 1024 characters from server
+				my $response = "";
+				$socket->recv($response, 1024);
+				$message = $response;
+				
+				$socket->close();
+				print $response ;
+				LOGOK "Response: $response";
+				LOGINF "Socket to KNXd Control Server closed.";
+			}
+			else
+			{
+				LOGERR "Open socket to KNXd Control Server failed. Set status to down.";
+				print "KNXD_STATUS_DOWN" ;
+			}
+		exit;
+	}
+
+#####################################################
+# Stop-Sub to stop KNXd 
+#####################################################
+
+	sub stop
+	{
+			LOGDEB "Open socket to KNXd Control Server...";
+			print "Content-Type: text/html\n\n";
+			use IO::Socket::INET;
+			# auto-flush on socket
+			$| = 1;
+			# create a connecting socket
+			my $socket = new IO::Socket::INET (
+			PeerHost => '0.0.0.0',
+			PeerPort => '5679',
+			Proto => 'tcp',
+			);
+			if ( $socket )
+			{
+				LOGINF "Socket to KNXd Control Server opened...";
+				# data to send to a server
+				my $req = 'StOp_KnXd';
 				my $size = $socket->send($req);
 				
 				# notify server that request has been sent

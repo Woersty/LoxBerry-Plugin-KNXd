@@ -6,8 +6,9 @@
 										<TMPL_VAR NOTIFICATIONS>
 										<!-- NOTIFICATIONS //-->
 									</div>
-									<div id="dialog"></div>
 									<link rel="stylesheet" href="http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/style.css">
+									<script src="http://<TMPL_VAR HTTP_HOST><TMPL_VAR HTTP_PATH>/jquery-ui-1.9.2.custom.min.js"></script>
+									<div id="dialog"></div>
 									<center>
 									<form method="post" data-ajax="false" name="main_form" id="main_form" action="./index.cgi">
 										<input type="hidden" name="saveformdata" value="1">
@@ -88,12 +89,54 @@
 											</table>
 										</div>
 									<p>
+											<a style="width:150px;" id="btnstopp" data-icon="delete"  data-role="button" data-mini="true" target="_self" onclick="ConfirmDialog('<br><table><tr><td><TMPL_VAR KNXD.TXT_STOP_KNXD_QUESTION></td></tr></table><br>','<TMPL_VAR KNXD.TXT_STOP_KNXD>');"><TMPL_VAR KNXD.TXT_STOP_KNXD></a>
 											<a id="btncancel" data-role="button" data-inline="true" data-mini="true" data-icon="delete" href="/admin/index.cgi"><TMPL_VAR KNXD.TXT_BTN_CANCEL></a>
 											<button type="submit" form="main_form" id="btnsubmit" data-role="button" data-inline="true" data-mini="true" data-icon="check"><TMPL_VAR KNXD.TXT_BTN_SAVE></button>
 									</p>
 									</form>
 									</center>
 <script>
+	function ConfirmDialog(message,title)
+	{
+		  $('#dialog').html(message)
+			.prop('id','dialog')
+			.dialog(
+			{
+				modal: true, title: title, zIndex: 10000, autoOpen: true,
+				width: 'auto', resizable: true, height: '250',width: '350',
+				buttons:
+				{
+					"<TMPL_VAR KNXD.DIALOG_YES>": function ()
+					{
+						$(":button:contains('<TMPL_VAR KNXD.DIALOG_YES>')").prop("disabled", true).addClass("ui-state-disabled");
+						$('#dialog').html('<center><br><TMPL_VAR KNXD.DIALOG_PROGRESS></center>');
+						$.get( "./index.cgi?stop=1", function( data ) 
+						{
+							if ( data == 'KNXD_STATUS_768' )
+							{
+								$('#dialog').html('<center><br><TMPL_VAR KNXD.DIALOG_SUCCESS></center>');
+							}
+							else
+							{
+								$('#dialog').html('<center><br><TMPL_VAR KNXD.DIALOG_FAIL><br></center>');
+								console.log("KNXd: "+data);
+							}
+							check_control_server();
+							setTimeout( function() { $('#dialog').dialog("close"); }, 3000);
+						}).fail(function() { $('#dialog').html('<center><br><TMPL_VAR KNXD.DIALOG_FAIL></center>'); $(":button:contains('<TMPL_VAR KNXD.DIALOG_YES>')").prop("disabled", '').removeClass("ui-state-disabled"); });
+					},
+					"<TMPL_VAR KNXD.DIALOG_NO>": function ()
+					{
+						$('#dialog').dialog("close");
+					}
+				},
+				close: function (event, ui)
+				{
+					$(this).hide();
+				}
+			});
+	};
+	
 	function check_control_server()
 	{
 		$.get( "./index.cgi?test=1", function( data ) 
