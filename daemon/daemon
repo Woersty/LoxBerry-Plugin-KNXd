@@ -26,9 +26,9 @@ timescript="REPLACELBPHTMLAUTHDIR/bin/eibtime.pl"
 
 INPUTFILE="/etc/knxd.conf"
 echo "Uncommenting the KNXd section in rpimonitor if installed" >>$logfile 2>&1
-find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#dynamic\.5679/dynamic\.5679/g' {} \; >>$logfile 2>&1
-find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#dynamic\.3672/dynamic\.3672/g' {} \; >>$logfile 2>&1
-find REPLACELBHOMEDIR/data/plugins/rpi_monitor/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#web\.status/web\.status/g' {} \;     >>$logfile 2>&1
+find REPLACELBHOMEDIR/data/plugins/REPLACELBPPLUGINDIR/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#dynamic\.5679/dynamic\.5679/g' {} \; >>$logfile 2>&1
+find REPLACELBHOMEDIR/data/plugins/REPLACELBPPLUGINDIR/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#dynamic\.3672/dynamic\.3672/g' {} \; >>$logfile 2>&1
+find REPLACELBHOMEDIR/data/plugins/REPLACELBPPLUGINDIR/ -name services.conf  -exec /bin/sed -i 's/^\#KNXd\#web\.status/web\.status/g' {} \;     >>$logfile 2>&1
 echo "Restart rpimonitor if installed"	 >>$logfile 2>&1
 echo `sleep 30;systemctl restart rpimonitor 2>/dev/null` &
 
