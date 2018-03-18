@@ -47,13 +47,13 @@ while(1)
     }
     elsif ( "$data" eq "StAtUs_KnXd" )
     {
-	    	system("service knxd status 2>&1 >/dev/null");
+	    	system("systemctl status knxd.service 2>&1 >/dev/null");
 		    $data = "KNXD_STATUS_".$?;
     }
     elsif ( "$data" eq "StOp_KnXd" )
     {
-	    	system("service knxd stop 2>&1 >/dev/null");
-	    	system("service knxd status 2>&1 >/dev/null");
+	    	system("systemctl stop knxd.service 2>&1 >/dev/null");
+	    	system("systemctl status knxd.service 2>&1 >/dev/null");
 		    $data = "KNXD_STATUS_".$?;
     }
     else
