@@ -16,14 +16,8 @@
 											<table class="formtable" width="70%">
 												<tr>
 													<td>
-														<div style="display:table; display: inline-block;">
-															<div style="display:table-row;">
-																<div style="display:table-cell;">
-																	<b><TMPL_VAR KNXD.TXT_KNXD_OPTS></b>
-																  <input class="textfield" autocomplete="nope" data-validation-error-msg="<TMPL_VAR ERRORS.TXT_ERROR_ENTER_VALID_KNXD_OPTS>" data-validation-rule="^[0-9A-Za-z\-\_\s\=\.\:\s\/]+$"  id="KNXD_OPTS" name="KNXD_OPTS" value="<TMPL_VAR KNXD_OPTS>" type="text">
-																</div>
-															</div>
-														</div>
+														<b><TMPL_VAR KNXD.TXT_KNXD_OPTS></b>
+														<input class="textfield" style="width:100%" autocomplete="nope" data-validation-error-msg="<TMPL_VAR ERRORS.TXT_ERROR_ENTER_VALID_KNXD_OPTS>" data-validation-rule="^[0-9A-Za-z\-\_\s\=\.\:\s\/]+$"  id="KNXD_OPTS" name="KNXD_OPTS" value="<TMPL_VAR KNXD_OPTS>" type="text">
 													</td>
 												</tr>
 												<tr>

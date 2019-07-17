@@ -35,7 +35,7 @@ while(1)
 
     if ( "$data" eq "ReStArT_KnXd" )
     {
-    	system("REPLACELBHOMEDIR/system/daemons/plugins/KNXd");
+    	system("REPLACELBHOMEDIR/system/daemons/plugins/KNXd >/dev/null 2>&1 ");
 			  if ($? ne 0) 
 			  {
 			    $data = "TXT_ERROR2_CONFIG_SAVED";
@@ -47,13 +47,13 @@ while(1)
     }
     elsif ( "$data" eq "StAtUs_KnXd" )
     {
-	    	system("systemctl status knxd.service 2>&1 >/dev/null");
+	    	system("service knxd status 2>&1 >>REPLACELBPLOGDIR/knxd.log");
 		    $data = "KNXD_STATUS_".$?;
     }
     elsif ( "$data" eq "StOp_KnXd" )
     {
-	    	system("systemctl stop knxd.service 2>&1 >/dev/null");
-	    	system("systemctl status knxd.service 2>&1 >/dev/null");
+	    	system("service knxd stop 2>&1 >>REPLACELBPLOGDIR/knxd.log");
+	    	system("service knxd status 2>&1 >>REPLACELBPLOGDIR/knxd.log");
 		    $data = "KNXD_STATUS_".$?;
     }
     else
