@@ -35,6 +35,7 @@ while(1)
 
     if ( "$data" eq "ReStArT_KnXd" )
     {
+        system("echo \"`date`<WARNING> KNXD restart:\" 2>&1 >>REPLACELBPLOGDIR/knxd.log");
     	system("REPLACELBHOMEDIR/system/daemons/plugins/KNXd >/dev/null 2>&1 ");
 			  if ($? ne 0) 
 			  {
@@ -47,11 +48,13 @@ while(1)
     }
     elsif ( "$data" eq "StAtUs_KnXd" )
     {
+            system("echo \"`date`<INFO> KNXD Status Report:\" 2>&1 >>REPLACELBPLOGDIR/knxd.log");
 	    	system("service knxd status 2>&1 >>REPLACELBPLOGDIR/knxd.log");
 		    $data = "KNXD_STATUS_".$?;
     }
     elsif ( "$data" eq "StOp_KnXd" )
     {
+            system("echo \"`date`<WARNING> KNXD stopped:\" 2>&1 >>REPLACELBPLOGDIR/knxd.log");
 	    	system("service knxd stop 2>&1 >>REPLACELBPLOGDIR/knxd.log");
 	    	system("service knxd status 2>&1 >>REPLACELBPLOGDIR/knxd.log");
 		    $data = "KNXD_STATUS_".$?;
