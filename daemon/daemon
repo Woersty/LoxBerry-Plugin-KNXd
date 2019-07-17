@@ -69,7 +69,7 @@ then
 
     ln -s $timescript $cronjob                                                                                                                         2>/dev/null |tee -a $logfile
     echo "`date` <INFO> Check, if KNXd Control Daemon is running"                                                                                              2>&1 |tee -a $logfile
-    export CS_PID=`pidof -s /usr/bin/perl plugins/knxd/bin/server_control.pl`
+    export CS_PID=`ps -ef|grep "knxd/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                            2>&1 >>$logfile
     echo $CS_PID                                                                                                                                       2>&1 |tee -a $logfile
     if [ -z "$CS_PID" ]
     then
@@ -176,7 +176,7 @@ else
     fi
 
     echo "`date` <INFO> Check, if KNXd Control Daemon is running"                                                                                             2>&1 |tee -a $logfile
-    export CS_PID=`pidof -s /usr/bin/perl plugins/knxd/bin/server_control.pl`
+    export CS_PID=`ps -ef|grep "knxd/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                            2>&1 >>$logfile
     echo $CS_PID                                                                                                                                       2>&1 |tee -a $logfile
     if [ -z "$CS_PID" ]
     then
