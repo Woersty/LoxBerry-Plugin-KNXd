@@ -36,12 +36,17 @@ else if ($_REQUEST["mode"] == "gad_query")
 {
 	if (file_exists($gad_query_script)) 
 	{
-		if( ( isset($_SERVER['PHP_AUTH_USER'] ) && ( $_SERVER['PHP_AUTH_USER'] == "$user" ) ) AND  ( isset($_SERVER['PHP_AUTH_PW'] ) && ( $_SERVER['PHP_AUTH_PW'] == "$pass" )) )
+		if ( ( isset($_SERVER['PHP_AUTH_USER'] ) && ( $_SERVER['PHP_AUTH_USER'] == "$user" ) ) AND  ( isset($_SERVER['PHP_AUTH_PW'] ) && ( $_SERVER['PHP_AUTH_PW'] == "$pass" )) )
 		{
 				$result = "\n".shell_exec("$gad_query_script");
 				error_log( date('Y-m-d H:i:s ')."[GAD-Query] OK \n", 3, $logfile);
 		}
-		else
+		else if ( ( isset($_REQUEST['user'] ) && ( $_REQUEST['user'] == "$user" ) ) AND  ( isset($_REQUEST['pass'] ) && ( $_REQUEST['pass'] == "$pass" )) )
+		{
+				$result = "\n".shell_exec("$gad_query_script");
+				error_log( date('Y-m-d H:i:s ')."[GAD-Query] OK \n", 3, $logfile);
+		}
+		else 
 		{
 				$result = authenticate();
 		}
