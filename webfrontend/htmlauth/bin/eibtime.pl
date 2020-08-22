@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #
 # eibtime.pl - Send time and date to KNX/EIB
-# Version: v2018.3.11
+# Version: 2020.8.22
 #
 # Copyright (C) 2008 Thomas Hoerndlein
 # Adapted for LoxBerry 1.x by Christian Wörstenfeld in 2018
@@ -94,6 +94,9 @@ else
 {
   print "Time successfully sent to Time-GAD $grptime.\n";
 }
+
+# Wait a second for slow KNX Gateways
+sleep 1;
 
 # Calculate KNX date and send on bus
 $byte1 = sprintf "%lx", $mday;
