@@ -16,7 +16,7 @@ PATH=$PATH.":REPLACELBHOMEDIR/sbin"
 
 ### END INIT INFO
 
-# Version v2018.3.11
+# Version 2021.04.18
 
 logfile="REPLACELBPLOGDIR/knxd.log"
 touch $logfile
@@ -30,8 +30,9 @@ timescript="REPLACELBPHTMLAUTHDIR/bin/eibtime.pl"
 INPUTFILE="/etc/knxd.conf"
 echo "`date` <INFO> Uncommenting the KNXd section in rpimonitor if installed" 2>&1 |tee -a $logfile
 find REPLACELBHOMEDIR/data/plugins/rpi_monitor*/ -name services.conf  -exec /bin/sed -i 's/^#KNXd#dynamic.5679/dynamic.5679/g' {} \; >>/dev/null 2>&1
-find REPLACELBHOMEDIR/data/plugins/rpi_monitor*/ -name services.conf  -exec /bin/sed -i 's/^#KNXd#dynamic.3672/dynamic.3672/g' {} \; >>/dev/null 2>&1
-find REPLACELBHOMEDIR/data/plugins/rpi_monitor*/ -name services.conf  -exec /bin/sed -i 's/^#KNXd#web.status.1.content.1.line.1="<b>KNXd/web.status.1.content.1.line.1="<b>KNXd/g' {} \; >>/dev/null 2>&1
+find REPLACELBHOMEDIR/data/plugins/rpi_monitor*/ -name services.conf  -exec /bin/sed -i 's/^#KNXd#dynamic.knxd/dynamic.knxd/g' {} \; >>/dev/null 2>&1
+find REPLACELBHOMEDIR/data/plugins/rpi_monitor*/ -name services.conf  -exec /bin/sed -i 's/^#KNXd#web.status.1/g' {} \; >>/dev/null 2>&1
+
 echo "`date` <INFO>Restart rpimonitor if installed"     2>&1 |tee -a $logfile
 echo `systemctl restart rpimonitor 1>/dev/null 2>&1`
 
